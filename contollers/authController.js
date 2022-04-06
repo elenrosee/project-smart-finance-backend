@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const queryString = require('query-string');
 const gravatar = require('gravatar');
 const axios = require('axios');
