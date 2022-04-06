@@ -9,9 +9,8 @@ const {
 class TransactionController {
   async addTransactionCtrl(req, res) {
     const { _id: id } = req.user;
-    const { type } = req.params;
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
-    const result = await addTransaction({ ...req.body, type, owner: id });
+    const result = await addTransaction({ ...req.body, owner: id });
 
     res.status(201).json({
       status: 'success',
@@ -34,8 +33,8 @@ class TransactionController {
 
   async getMonthTransactionsCtrl(req, res) {
     const { _id: id } = req.user;
-    const { year, month, type } = req.params;
-    const result = await getMonthTransactions({ year, month, type, id });
+    const { year, month, day } = req.params;
+    const result = await getMonthTransactions({ year, month, day, id });
 
     res.status(200).json({
       status: 'success',
@@ -61,12 +60,8 @@ class TransactionController {
 
   async getMonthTotalAmountsCtrl(req, res) {
     const { _id: id } = req.user;
-    const { type } = req.params;
 
-    const result = await getMonthTotalAmounts({
-      type,
-      id,
-    });
+    const result = await getMonthTotalAmounts({ id });
 
     res.status(200).json({
       status: 'success',

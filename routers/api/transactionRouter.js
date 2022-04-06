@@ -14,26 +14,24 @@ const { joiTransactionSchema } = require('../../models/transaction');
 
 const router = express.Router();
 
+// get AllUserTransactions by year/month/day
 router.get(
-  '/:year/:month/:type',
+  '/:year/:month/:day',
   authMiddleware,
   asyncWrapper(getMonthTransactionsCtrl),
 );
 
+// no need in this route ???
 router.get(
   '/:year/:month/:type/data',
   authMiddleware,
   asyncWrapper(getMonthCategoriesSumCtrl),
 );
 
-router.get(
-  '/:type/total',
-  authMiddleware,
-  asyncWrapper(getMonthTotalAmountsCtrl),
-);
+router.get('/summary', authMiddleware, asyncWrapper(getMonthTotalAmountsCtrl));
 
 router.post(
-  '/:type',
+  '/',
   authMiddleware,
   ValidationMiddlewares(joiTransactionSchema),
   asyncWrapper(addTransactionCtrl),
