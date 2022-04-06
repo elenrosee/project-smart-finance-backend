@@ -21,7 +21,6 @@ router.get(
   asyncWrapper(getMonthTransactionsCtrl),
 );
 
-// no need in this route ???
 router.get(
   '/:year/:month/:type/data',
   authMiddleware,
