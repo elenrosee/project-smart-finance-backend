@@ -1,4 +1,5 @@
 const { format } = require('date-fns');
+const ruLocale = require('date-fns/locale/ru');
 
 const { Transaction } = require('../models');
 
@@ -24,7 +25,8 @@ const getSummaryByType = async (type, id) => {
     }, 0);
 
     const monthSum = {
-      month: dateNow,
+      monthNumber: format(dateNow, 'MM'),
+      monthName: format(dateNow, 'LLLL', { locale: ruLocale }),
       sum,
     };
 
