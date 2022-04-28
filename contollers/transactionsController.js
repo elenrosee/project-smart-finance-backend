@@ -44,11 +44,10 @@ class TransactionController {
 
   async getMonthCategoriesSumCtrl(req, res) {
     const { _id: id } = req.user;
-    const { year, month, type } = req.params;
+    const { year, month } = req.params;
     const result = await getMonthCategoriesSum({
       year,
       month,
-      type,
       id,
     });
 

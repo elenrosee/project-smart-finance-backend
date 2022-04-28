@@ -22,7 +22,7 @@ router.get(
 );
 
 router.get(
-  '/:year/:month/:type/data',
+  '/:year/:month',
   authMiddleware,
   asyncWrapper(getMonthCategoriesSumCtrl),
 );
