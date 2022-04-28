@@ -1,19 +1,31 @@
 const { transactionsData } = require('../../helpers');
 const { Transaction } = require('../../models');
 
-const getMonthCategoriesSum = async ({ year, month, type, id }) => {
-  const allTransactions = await Transaction.find({
+const getMonthCategoriesSum = async ({ year, month, id }) => {
+  const allIncomeTransactions = await Transaction.find({
     year,
     month,
-    type,
+    type: 'income',
     owner: id,
   });
 
-  if (!allTransactions[0]) {
-    return [];
-  }
+  const allCostsTransactions = await Transaction.find({
+    year,
+    month,
+    type: 'costs',
+    owner: id,
+  });
 
-  const result = transactionsData(allTransactions);
+  const result = {
+    income:
+      allIncomeTransactions.length > 0
+        ? transactionsData(allIncomeTransactions)
+        : [],
+    costs:
+      allCostsTransactions.length > 0
+        ? transactionsData(allCostsTransactions)
+        : [],
+  };
   return result;
 };
 

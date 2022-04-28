@@ -1,21 +1,19 @@
+const { format } = require('date-fns');
+const ruLocale = require('date-fns/locale/ru');
+
 const { Transaction } = require('../models');
 
 const getSummaryByType = async (type, id) => {
-  const result = {};
+  const result = [];
 
-  for (let i = 0; i < 6; i += 1) {
+  for (let i = 1; i < 7; i += 1) {
     const dateNow = new Date();
-    const lastMonth = dateNow.setMonth(dateNow.getMonth() - i);
-
-    const month =
-      `${new Date(lastMonth).getMonth() + 1}`.length > 1
-        ? `${new Date(lastMonth).getMonth() + 1}`
-        : `0${new Date(lastMonth).getMonth() + 1}`;
+    dateNow.setMonth(Number(format(dateNow, 'M')) - i);
 
     // eslint-disable-next-line no-await-in-loop
     const allTransactions = await Transaction.find({
-      year: `${new Date(lastMonth).getFullYear()}`,
-      month,
+      year: format(dateNow, 'yyyy'),
+      month: format(dateNow, 'MM'),
       type,
       owner: id,
     });
@@ -26,7 +24,13 @@ const getSummaryByType = async (type, id) => {
       return acc;
     }, 0);
 
-    result[dateNow.toLocaleString('ru', { month: 'long' })] = sum;
+    const monthSum = {
+      monthNumber: format(dateNow, 'MM'),
+      monthName: format(dateNow, 'LLLL', { locale: ruLocale }),
+      sum,
+    };
+
+    result.push(monthSum);
   }
 
   return result;

@@ -3,7 +3,7 @@ const {
   addTransaction,
   getMonthCategoriesSum,
   deleteTransaction,
-  getMonthTotalAmounts,
+  getSummary,
 } = require('../services/transactions');
 
 class TransactionController {
@@ -44,11 +44,10 @@ class TransactionController {
 
   async getMonthCategoriesSumCtrl(req, res) {
     const { _id: id } = req.user;
-    const { year, month, type } = req.params;
+    const { year, month } = req.params;
     const result = await getMonthCategoriesSum({
       year,
       month,
-      type,
       id,
     });
 
@@ -58,10 +57,10 @@ class TransactionController {
     });
   }
 
-  async getMonthTotalAmountsCtrl(req, res) {
+  async getSummaryCtrl(req, res) {
     const { _id: id } = req.user;
 
-    const result = await getMonthTotalAmounts({ id });
+    const result = await getSummary({ id });
 
     res.status(200).json({
       status: 'success',
