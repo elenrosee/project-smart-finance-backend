@@ -4,6 +4,7 @@ const {
   getMonthCategoriesSum,
   deleteTransaction,
   getSummary,
+  getAllUserTransactions,
 } = require('../services/transactions');
 
 class TransactionController {
@@ -27,6 +28,23 @@ class TransactionController {
     res.status(200).json({
       status: 'success',
       message: 'Transaction deleted',
+      data: result,
+    });
+  }
+
+  // working here  '/:type/:group/:groupAmount'
+  async getAllUserTransactionsCtrl(req, res) {
+    const { _id: id } = req.user;
+    const { type, group, groupAmount } = req.params;
+    const result = await getAllUserTransactions({
+      type,
+      group,
+      groupAmount,
+      id,
+    });
+
+    res.status(200).json({
+      status: 'success',
       data: result,
     });
   }

@@ -32,6 +32,10 @@ const transactionSchema = Schema(
       type: String,
       required: [true, 'year must be enter (4 characters)'],
     },
+    dateISO: {
+      type: String,
+      required: [true, 'dateISO must be enter'],
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',

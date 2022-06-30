@@ -1,6 +1,7 @@
 const express = require('express');
 
 const {
+  getAllUserTransactionsCtrl,
   getMonthCategoriesSumCtrl,
   getMonthTransactionsCtrl,
   addTransactionCtrl,
@@ -14,6 +15,13 @@ const { joiTransactionSchema } = require('../../models/transaction');
 
 const router = express.Router();
 
+// get all last userTransactions by ':type' and sorted by dateISO, will return some :group width needed :amount of transactions
+router.get(
+  '/:type/:group/:groupAmount',
+  authMiddleware,
+  asyncWrapper(getAllUserTransactionsCtrl),
+);
+
 // get AllUserTransactions by year/month/day
 router.get(
   '/:year/:month/:day',
@@ -21,6 +29,7 @@ router.get(
   asyncWrapper(getMonthTransactionsCtrl),
 );
 
+// get sum of costs/income by year and month
 router.get(
   '/:year/:month',
   authMiddleware,
