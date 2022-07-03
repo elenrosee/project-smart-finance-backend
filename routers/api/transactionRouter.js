@@ -24,7 +24,7 @@ router.get(
 
 // get AllUserTransactions by year/month/day
 router.get(
-  '/:year/:month/:day',
+  'fromDay/:year/:month/:day',
   authMiddleware,
   asyncWrapper(getMonthTransactionsCtrl),
 );
